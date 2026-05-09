@@ -8,8 +8,8 @@ import { ThemeProvider } from "@/components/ThemeProvider.tsx"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "SKILL ANALYSER",
-  description: "AI-powered mock interview platform",
+  title: "SKILL ANALYSER — AI-Powered Mock Interviews",
+  description: "Practice with AI-powered mock interviews tailored to your role. Get instant feedback and ace your next interview.",
 };
 
 export default function RootLayout({ children }) {

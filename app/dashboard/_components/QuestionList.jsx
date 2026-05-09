@@ -21,17 +21,23 @@ const QuestionList = () => {
       if (result.success) {
         setQuestionList(result.data);
       }
-    } catch (error) {
-      console.error("Error fetching questions:", error);
+    } catch {
+      // Error handled silently — empty list shown
     } finally {
       setLoading(false);
     }
   };
   return (
     <div>
-      {questionList.length > 0 ? (
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
+          {[1, 2, 3].map((item) => (
+            <Skeleton key={item} className="h-[160px] w-full rounded-2xl bg-white/[0.05]" />
+          ))}
+        </div>
+      ) : questionList.length > 0 ? (
         <>
-          <h2 className="font-medium text-xl">Previous Mock Interview</h2>
+          <h2 className="font-medium text-xl text-white mb-4">Previous Generated Questions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
             {questionList.map((question, index) => (
               <QuestionItemCard key={index} question={question} />
@@ -39,9 +45,8 @@ const QuestionList = () => {
           </div>
         </>
       ) : (
-        <div className="my-10 flex flex-col gap-5">
-          <Skeleton className="w-full sm:w-[20rem] h-10 rounded-full animate-pulse bg-gray-300" />
-          <Skeleton className="w-full sm:w-[20rem] h-10 rounded-full animate-pulse bg-gray-300" />
+        <div className="col-span-full p-8 text-center border border-white/[0.06] bg-white/[0.02] rounded-2xl">
+          <p className="text-gray-400">No questions found. Create your first one above!</p>
         </div>
       )}
     </div>

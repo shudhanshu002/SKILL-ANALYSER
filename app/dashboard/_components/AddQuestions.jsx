@@ -9,13 +9,11 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { LoaderCircle } from "lucide-react";
-import { chatSession } from "@/utils/GeminiAIModal";
 import { v4 as uuidv4 } from "uuid";
 import { saveQuestion } from "../actions";
 import { toast } from "sonner";
@@ -28,7 +26,6 @@ const AddQuestions = () => {
   const [company, setCompany] = useState("");
   const [jobExperience, setJobExperience] = useState();
   const [loading, setLoading] = useState(false);
-  const [questionJsonResponse, setQuestionJsonResponse] = useState([]);
   const { user } = useUser();
   const router = useRouter();
 
@@ -43,13 +40,21 @@ const AddQuestions = () => {
     try {
       const InputPrompt = `Job Position: ${jobPosition}, Job Description: ${jobDesc}, Years of Experience: ${jobExperience}, Question Type: ${typeQuestion}, Specific Company: ${company}. Based on this, provide 5 interview questions with answers in JSON format. The response must be a valid JSON array of objects, where each object has "Question" and "Answer" keys. Do not include any markdown formatting like \`\`\`json or extra text, just the raw JSON array. Keep answers concise.`;
 
-      const result = await chatSession.sendMessage(InputPrompt);
-      const rawText = result.response.text();
+      const response = await fetch("/api/gemini", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: InputPrompt }),
+      });
+
+      if (!response.ok) {
+        throw new Error("AI service unavailable.");
+      }
+
+      const { text: rawText } = await response.json();
       
       // Robust JSON extraction
-      const match = rawText.match(/\[([\s\S]*)\]/) || rawText.match(/```json\n?([\s\S]*?)\n?```/);
+      const match = rawText.match(/\[[\s\S]*\]/) || rawText.match(/```json\n?([\s\S]*?)\n?```/);
       const MockQuestionJsonResp = match ? match[0].replace(/```json|```/g, "").trim() : rawText.trim();
-      
 
       // Validate JSON
       JSON.parse(MockQuestionJsonResp);
@@ -77,7 +82,7 @@ const AddQuestions = () => {
           throw new Error(result.error);
         }
       }
-    } catch (error) {
+    } catch {
       toast.error("Error generating questions. Please try again.");
     } finally {
       setLoading(false);
@@ -86,52 +91,54 @@ const AddQuestions = () => {
   return (
     <div>
       <div
-        className="p-10 rounded-lg border bg-secondary hover:scale-105 hover:shadow-sm transition-all cursor-pointer"
+        className="group relative p-10 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.15] hover:scale-[1.02] transition-all duration-500 cursor-pointer"
         onClick={() => setOpenDialog(true)}
       >
-        <h2 className=" text-lg text-center">+ Add New Questions</h2>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-violet-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <h2 className="relative text-lg text-center text-gray-300 group-hover:text-white transition-colors duration-300">+ Add New Questions</h2>
       </div>
 
       <Dialog open={openDailog}>
-        <DialogContent>
+        <DialogContent className="max-w-2xl bg-[#0a0a0a] border border-white/[0.08] text-white max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>What model questions are you seeking</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-2xl text-white">What model questions are you seeking?</DialogTitle>
+            <DialogDescription asChild>
+              <div className="text-gray-400 text-sm">
               <form onSubmit={onSubmit}>
                 <div className="my-3">
-                  <h2>
-                    Add Details about your job position, job descritpion and
+                  <h2 className="text-gray-400">
+                    Add details about your job position, job description and
                     years of experience
                   </h2>
 
                   <div className="mt-7 my-3">
-                    <label className="text-black">Job Role/job Position</label>
+                    <label className="text-gray-300 text-sm font-medium">Job Role/Job Position</label>
                     <Input
-                      className="mt-1"
+                      className="mt-1 bg-white/[0.04] border-white/[0.08] text-white placeholder:text-gray-600 focus:border-blue-500/50"
                       value={jobPosition}
-                      placeholder="Ex. Full stack Developer"
+                      placeholder="Ex. Full Stack Developer"
                       required
                       onChange={handleInputChange(setJobPosition)}
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-black">
-                      Job Description/ Tech stack (In Short)
+                    <label className="text-gray-300 text-sm font-medium">
+                      Job Description / Tech Stack (In Short)
                     </label>
                     <Textarea
-                      className="placeholder-opacity-50"
+                      className="mt-1 bg-white/[0.04] border-white/[0.08] text-white placeholder:text-gray-600 focus:border-blue-500/50"
                       value={jobDesc}
-                      placeholder="Ex. React, Angular, Nodejs, Mysql, Nosql, Python"
+                      placeholder="Ex. React, Angular, Node.js, MySQL, NoSQL, Python"
                       required
                       onChange={handleInputChange(setJobDesc)}
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-black">
+                    <label className="text-gray-300 text-sm font-medium">
                       Type of Questions (In Short)
                     </label>
                     <Input
-                      className="placeholder-opacity-50"
+                      className="mt-1 bg-white/[0.04] border-white/[0.08] text-white placeholder:text-gray-600 focus:border-blue-500/50"
                       value={typeQuestion}
                       placeholder="Ex. CPP, Leetcode, Domain based"
                       required
@@ -139,11 +146,11 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-black">
-                      Company are you seeking
+                    <label className="text-gray-300 text-sm font-medium">
+                      Company you are targeting
                     </label>
                     <Input
-                      className="mt-1"
+                      className="mt-1 bg-white/[0.04] border-white/[0.08] text-white placeholder:text-gray-600 focus:border-blue-500/50"
                       value={company}
                       placeholder="Ex. Microsoft, Apple, Google, Mercedes"
                       required
@@ -151,9 +158,9 @@ const AddQuestions = () => {
                     />
                   </div>
                   <div className="my-4">
-                    <label className="text-black">Years of Experience</label>
+                    <label className="text-gray-300 text-sm font-medium">Years of Experience</label>
                     <Input
-                      className="mt-1"
+                      className="mt-1 bg-white/[0.04] border-white/[0.08] text-white placeholder:text-gray-600 focus:border-blue-500/50"
                       placeholder="Ex. 5"
                       value={jobExperience}
                       max="50"
@@ -166,15 +173,16 @@ const AddQuestions = () => {
                 <div className="flex gap-5 justify-end">
                   <Button
                     type="button"
-                    variant="goast"
+                    variant="ghost"
+                    className="text-gray-400 hover:text-white hover:bg-white/[0.05]"
                     onClick={() => setOpenDialog(false)}
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={loading}>
+                  <Button type="submit" disabled={loading} className="bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 shadow-lg shadow-blue-500/20 border-0">
                     {loading ? (
                       <>
-                        <LoaderCircle className="animate-spin" />
+                        <LoaderCircle className="animate-spin mr-2 h-4 w-4" />
                         Generating From AI
                       </>
                     ) : (
@@ -183,6 +191,7 @@ const AddQuestions = () => {
                   </Button>
                 </div>
               </form>
+              </div>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>

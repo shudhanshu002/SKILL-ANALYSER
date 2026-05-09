@@ -38,21 +38,42 @@ const StartInterview = ({ params }) => {
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen text-xl">Loading Interview...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen text-xl text-red-500">
-        <p>{error}</p>
-        <Button className="mt-4" onClick={() => window.location.reload()}>Retry</Button>
+      <div className="flex flex-col justify-center items-center min-h-[60vh] text-red-400 gap-4">
+        <p className="text-xl font-medium">{error}</p>
+        <Button 
+          className="bg-white/[0.04] border border-white/[0.1] text-white hover:bg-white/[0.08]" 
+          onClick={() => window.location.reload()}
+        >
+          Retry Connection
+        </Button>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 my-10">
+    <div className="py-8 px-2 max-w-6xl mx-auto">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-white">Interview Session</h1>
+          <p className="text-sm text-gray-500">{interviewData?.jobPosition}</p>
+        </div>
+        <div className="bg-white/[0.04] border border-white/[0.08] px-4 py-2 rounded-full backdrop-blur-sm">
+          <span className="text-sm font-medium text-gray-300">
+            Progress: <span className="text-blue-400">{activeQuestionIndex + 1}</span> / {mockInterviewQuestion?.length}
+          </span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-10">
         {/* Questin Section */}
         <QuestionSection
           mockInterviewQuestion={mockInterviewQuestion}
@@ -66,28 +87,39 @@ const StartInterview = ({ params }) => {
           interviewData={interviewData}
         />
       </div>
-      <div className="flex gap-3 my-5 md:my-0 md:justify-end md:gap-6">
-        {activeQuestionIndex > 0 && (
-          <Button
-            onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}
-          >
-            Previous Question
-          </Button>
-        )}
-        {activeQuestionIndex != mockInterviewQuestion?.length - 1 && (
-          <Button
-            onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}
-          >
-            Next Question
-          </Button>
-        )}
-        {activeQuestionIndex == mockInterviewQuestion?.length - 1 && (
-          <Link
-            href={"/dashboard/interview/" + interviewData?.mockId + "/feedback"}
-          >
-            <Button>End Interview</Button>
-          </Link>
-        )}
+
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center pt-8 border-t border-white/[0.06]">
+        <div>
+          {activeQuestionIndex > 0 && (
+            <Button
+              variant="outline"
+              className="bg-white/[0.02] border-white/[0.08] text-white hover:bg-white/[0.06] hover:text-white px-6 py-5 rounded-xl transition-all"
+              onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}
+            >
+              ← Previous Question
+            </Button>
+          )}
+        </div>
+        
+        <div className="flex gap-4">
+          {activeQuestionIndex != mockInterviewQuestion?.length - 1 && (
+            <Button
+              className="bg-white/[0.08] hover:bg-white/[0.12] text-white border border-white/[0.1] px-8 py-5 rounded-xl transition-all font-medium"
+              onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}
+            >
+              Next Question →
+            </Button>
+          )}
+          {activeQuestionIndex == mockInterviewQuestion?.length - 1 && (
+            <Link
+              href={"/dashboard/interview/" + interviewData?.mockId + "/feedback"}
+            >
+              <Button className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 border-0 px-8 py-5 rounded-xl transition-all font-bold">
+                End & View Feedback
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -34,75 +34,101 @@ const Interview = ({ params }) => {
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen text-xl">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen text-xl text-red-500">
-        <p>{error}</p>
-        <Button className="mt-4" onClick={() => window.location.reload()}>Retry</Button>
+      <div className="flex flex-col justify-center items-center min-h-[60vh] text-red-400 gap-4">
+        <p className="text-xl font-medium">{error}</p>
+        <Button 
+          className="bg-white/[0.04] border border-white/[0.1] text-white hover:bg-white/[0.08]" 
+          onClick={() => window.location.reload()}
+        >
+          Retry Connection
+        </Button>
       </div>
     );
   }
   return (
-    <div className="my-10">
-      <h2 className="font-bold text-2xl text-center">Let's Get Started</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
-        <div className="flex flex-col my-5 gap-5">
-          <div className="flex flex-col p-5 rounded-lg border gap-5">
-            <h2 className="text-lg">
-              <strong>Job Role/Job Position: </strong>
-              {interviewData?.jobPosition}
+    <div className="py-12 px-2 max-w-5xl mx-auto">
+      <div className="mb-10 text-center">
+        <div className="text-xs text-blue-400 font-bold uppercase tracking-[0.25em] mb-3">Preparation</div>
+        <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">Let's Get Started</h1>
+        <p className="text-sm text-gray-500">Review your details and setup your environment before beginning.</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm gap-5">
+            <h2 className="text-gray-300">
+              <strong className="text-white block mb-1 text-sm uppercase tracking-wider">Job Role/Job Position</strong>
+              <span className="text-lg">{interviewData?.jobPosition}</span>
             </h2>
-            <h2 className="text-lg">
-              <strong>Job Description/Job Stack: </strong>
-              {interviewData?.jobDesc}
+            <div className="w-full h-px bg-white/[0.05]" />
+            <h2 className="text-gray-300">
+              <strong className="text-white block mb-1 text-sm uppercase tracking-wider">Job Description/Tech Stack</strong>
+              <span className="text-lg">{interviewData?.jobDesc}</span>
             </h2>
-            <h2 className="text-lg">
-              <strong>Years of Experience: </strong>
-              {interviewData?.jobExperience}
+            <div className="w-full h-px bg-white/[0.05]" />
+            <h2 className="text-gray-300">
+              <strong className="text-white block mb-1 text-sm uppercase tracking-wider">Years of Experience</strong>
+              <span className="text-lg">{interviewData?.jobExperience}</span>
             </h2>
           </div>
-          <div className="p-5 border rounded-lg border-yellow-300 bg-yellow-100">
-            <h2 className="flex gap-2 items-center text-yellow-700 mb-2">
-              <Lightbulb />
-              <strong>Information</strong>
+
+          <div className="p-6 border border-yellow-500/20 rounded-2xl bg-yellow-500/5 backdrop-blur-sm">
+            <h2 className="flex gap-2 items-center text-yellow-400 mb-3 font-semibold text-lg">
+              <Lightbulb className="w-5 h-5" />
+              Information
             </h2>
-            <h2 className="mt-3 text-yellow-500">
+            <h2 className="text-yellow-200/80 leading-relaxed text-sm">
               {process.env.NEXT_PUBLIC_INFORMATION}
             </h2>
           </div>
         </div>
-        <div>
-          {webCamEnabled ? (
-            <div className=" flex items-center justify-center p-10">
-              <Webcam
-                onUserMedia={() => setWebCamEnabled(true)}
-                onUserMediaError={() => setWebCamEnabled(false)}
-                height={300}
-                width={300}
-                mirrored={true}
-              />
-            </div>
-          ) : (
-            <div>
-              <WebcamIcon className="h-72 w-full my-6 p-20 bg-secondary rounded-lg border" />
-            </div>
-          )}
-          <div>
+
+        <div className="flex flex-col">
+          <div className="flex-grow flex flex-col justify-center">
+            {webCamEnabled ? (
+              <div className="flex items-center justify-center p-4 bg-white/[0.02] border border-white/[0.06] rounded-2xl backdrop-blur-sm overflow-hidden mb-6">
+                <Webcam
+                  onUserMedia={() => setWebCamEnabled(true)}
+                  onUserMediaError={() => setWebCamEnabled(false)}
+                  className="rounded-xl w-full max-w-[400px] shadow-2xl"
+                  mirrored={true}
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center p-12 bg-white/[0.02] border border-white/[0.06] rounded-2xl backdrop-blur-sm mb-6 aspect-video">
+                <WebcamIcon className="h-24 w-24 text-gray-500" />
+              </div>
+            )}
+            
             <Button
-              className={`${webCamEnabled ? "w-full" : "w-full"}`}
+              variant="outline"
+              className={`w-full py-6 text-sm font-semibold rounded-xl border transition-all duration-300 ${
+                webCamEnabled 
+                  ? "bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20 hover:text-red-300" 
+                  : "bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]"
+              }`}
               onClick={() => setWebCamEnabled((prev) => !prev)}
             >
-              {webCamEnabled ? "Close WebCam" : "Enable WebCam"}
+              {webCamEnabled ? "Disable Camera & Microphone" : "Enable Camera & Microphone"}
             </Button>
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-4 md:my-0 md:justify-end md:items-end">
+      
+      <div className="flex justify-center md:justify-end mt-12 pt-8 border-t border-white/[0.06]">
         <Link href={"/dashboard/interview/" + params.interviewId + "/start"}>
-          <Button>Start Interview</Button>
+          <Button className="px-10 py-6 bg-gradient-to-r from-blue-500 to-violet-600 text-white font-semibold rounded-xl hover:from-blue-400 hover:to-violet-500 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-105 transform transition-all duration-300 text-base">
+            Start Interview →
+          </Button>
         </Link>
       </div>
     </div>

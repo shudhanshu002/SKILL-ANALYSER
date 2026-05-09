@@ -6,8 +6,6 @@ import { checkSystemConnectivity } from "../diagnostics"; // Import diagnostic a
 import InterviewItemCard from "./InterviewItemCard";
 import { Skeleton } from "@/components/ui/skeleton"
 import { AlertCircle, RefreshCcw } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
 
 const InterviewList = () => {
   const { user } = useUser();
@@ -43,23 +41,24 @@ const InterviewList = () => {
       setLoading(false);
     }
   };
+  
   if (error) {
     return (
-      <div className="my-5 p-6 border-2 border-red-200 bg-red-50 rounded-xl">
-        <div className="flex items-center gap-3 text-red-600 font-bold mb-4">
+      <div className="my-5 p-6 border border-red-500/30 bg-red-500/10 rounded-2xl backdrop-blur-sm">
+        <div className="flex items-center gap-3 text-red-400 font-bold mb-4">
           <AlertCircle />
           <h2>Connection Error</h2>
         </div>
-        <p className="text-gray-700 mb-6">{error} This is often caused by local DNS restrictions or a network firewall.</p>
+        <p className="text-gray-300 mb-6">{error} This is often caused by local DNS restrictions or a network firewall.</p>
         
         {diagnosticResult && (
-          <div className="bg-white p-4 rounded-lg border mb-6 text-sm">
-            <h3 className="font-semibold mb-2">Network Diagnostics:</h3>
+          <div className="bg-black/50 p-4 rounded-xl border border-white/10 mb-6 text-sm">
+            <h3 className="font-semibold text-white mb-2">Network Diagnostics:</h3>
             <ul className="space-y-2">
               {diagnosticResult.map((res, i) => (
-                <li key={i} className="flex justify-between border-b pb-1 last:border-0">
-                  <span className="font-medium">{res.name}:</span>
-                  <span className={res.status === "Connected" ? "text-green-600" : "text-red-500 font-bold"}>
+                <li key={i} className="flex justify-between border-b border-white/5 pb-2 last:border-0 last:pb-0">
+                  <span className="font-medium text-gray-300">{res.name}:</span>
+                  <span className={res.status === "Connected" ? "text-green-400" : "text-red-400 font-bold"}>
                     {res.status} {res.error ? `(${res.error})` : ""}
                   </span>
                 </li>
@@ -68,25 +67,26 @@ const InterviewList = () => {
           </div>
         )}
 
-        <div className="flex flex-wrap gap-4">
-          <Button variant="outline" onClick={GetInterviewList} className="flex gap-2">
+        <div className="flex flex-wrap gap-4 items-center">
+          <button onClick={GetInterviewList} className="flex gap-2 items-center px-4 py-2 rounded-lg bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 transition-colors">
             <RefreshCcw className="h-4 w-4" /> Try Again
-          </Button>
-          <div className="text-xs text-gray-500 flex flex-col justify-center">
+          </button>
+          <div className="text-xs text-gray-400">
             <p><strong>Tip:</strong> Try changing your DNS to Google (8.8.8.8) or Cloudflare (1.1.1.1)</p>
           </div>
         </div>
       </div>
     );
   }
+  
   return (
     <div>
-      <h2 className="font-medium text-xl">Previous Mock Interview</h2>
+      <h2 className="font-medium text-xl text-white mb-4">Previous Mock Interviews</h2>
   
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
           {[1, 2, 3].map((item) => (
-            <Skeleton key={item} className="h-[150px] w-full rounded-lg" />
+            <Skeleton key={item} className="h-[160px] w-full rounded-2xl bg-white/[0.05]" />
           ))}
         </div>
       ) : (
@@ -96,7 +96,9 @@ const InterviewList = () => {
               <InterviewItemCard key={index} interview={interview} />
             ))
           ) : (
-            <p className="text-gray-500">No interviews found. Create your first one!</p>
+            <div className="col-span-full p-8 text-center border border-white/[0.06] bg-white/[0.02] rounded-2xl">
+                <p className="text-gray-400">No interviews found. Create your first one above!</p>
+            </div>
           )}
         </div>
       )}

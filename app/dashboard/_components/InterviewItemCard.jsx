@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
 
 const InterviewItemCard = ({interview}) => {
@@ -12,17 +11,23 @@ const InterviewItemCard = ({interview}) => {
         router.push("/dashboard/interview/"+interview?.mockId+"/feedback")
     }
   return (
-    <div className="border border-gray-500 shadow-sm rounded-lg p-3" >
-        <h2 className='font-bold text-primary' >{interview?.jobPosition}</h2>
-        <h2 className='text-sm text-gray-600' >{interview?.jobExperience} Years of experience</h2>
-        <h2 className="text-xs text-gray-400" >Created At:{interview.createdAt}</h2>
+    <div className="group relative bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.05] hover:border-white/[0.15] transition-all duration-500">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-violet-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="relative">
+        <h2 className='font-semibold text-white text-lg mb-1'>{interview?.jobPosition}</h2>
+        <h2 className='text-sm text-gray-500'>{interview?.jobExperience} Years of experience</h2>
+        <h2 className="text-xs text-gray-600 mt-1">Created At: {interview.createdAt}</h2>
 
-        <div className='flex justify-between mt-2 gap-5 ' >
-            <Button onClick={onFeedback} size="sm"  className="w-full" >Feedback</Button>
-            <Button onClick={onStart} size="sm"  className="w-full">Start</Button>
+        <div className='flex justify-between mt-4 gap-3'>
+            <button onClick={onFeedback} className="flex-1 px-4 py-2.5 text-sm font-medium rounded-xl bg-white/[0.04] border border-white/[0.08] text-gray-300 hover:bg-white/[0.08] hover:text-white hover:border-white/[0.15] transition-all duration-300 text-center">
+              Feedback
+            </button>
+            <button onClick={onStart} className="flex-1 px-4 py-2.5 text-sm font-semibold rounded-xl bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all duration-300 text-center">
+              Start
+            </button>
         </div>
+      </div>
     </div>
-
   )
 }
 

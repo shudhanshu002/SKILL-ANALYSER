@@ -12,108 +12,72 @@ export default async function Page() {
   }
 
   return (
-    <section className="bg-white dark:bg-gray-900 min-h-screen">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
+    <section className="bg-black text-white min-h-screen relative overflow-hidden">
+      {/* Background grid */}
+      <div className="fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none z-0" />
+
+      {/* Animated gradient orbs */}
+      <div className="fixed top-[-10%] left-[20%] w-[500px] h-[500px] bg-blue-700/20 rounded-full blur-[140px] pointer-events-none z-0 animate-float" />
+      <div className="fixed top-[30%] right-[10%] w-[400px] h-[400px] bg-violet-700/15 rounded-full blur-[140px] pointer-events-none z-0 animate-float-delayed" />
+      <div className="fixed bottom-[10%] left-[40%] w-[350px] h-[350px] bg-purple-700/10 rounded-full blur-[160px] pointer-events-none z-0 animate-pulse-glow" />
+
+      <div className="lg:grid lg:min-h-screen lg:grid-cols-12 relative z-10">
         {/* Left Side - Hero Section */}
-        <section className="relative flex h-32 items-end bg-blue-600 lg:col-span-5 lg:h-full xl:col-span-6">
-          {/* Background Image */}
-          <div className="absolute inset-0">
-            <img
-              alt="AI Interview Platform"
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80"
-              className="h-full w-full object-cover opacity-20"
-            />
-            <div className="absolute inset-0 bg-blue-600/80"></div>
-          </div>
+        <section className="relative flex h-32 items-end lg:col-span-5 lg:h-full xl:col-span-6 overflow-hidden">
+          {/* Subtle gradient background instead of solid blue */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-blue-950/20 to-black z-0" />
 
           {/* Content */}
-          <div className="relative z-10 hidden lg:block lg:p-12">
+          <div className="relative z-10 hidden lg:flex lg:flex-col lg:justify-center lg:h-full lg:p-12 xl:p-16 w-full">
             <a
-              className="block text-white hover:text-blue-200 transition-colors"
+              className="block text-white hover:opacity-80 transition-opacity mb-16"
               href="/"
             >
-              <span className="sr-only">AI Interview Platform</span>
+              <span className="sr-only">SKILL ANALYSER</span>
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                  <svg
-                    className="w-7 h-7 text-blue-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                      clipRule="evenodd"
-                    />
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-violet-600 rounded-lg flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="text-2xl font-bold">SKILL ANALYSER</span>
+                <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">SKILL ANALYSER</span>
               </div>
             </a>
 
-            <div className="mt-16 space-y-8">
-              <h2 className="text-4xl font-bold text-white leading-tight">
-                Master Your Interview Skills
+            <div className="space-y-8">
+              <h2 className="text-4xl xl:text-5xl font-bold text-white leading-tight">
+                Master Your <br/>
+                <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">Interview Skills</span>
               </h2>
 
-              <p className="text-lg text-blue-100 max-w-md">
+              <p className="text-lg text-gray-400 max-w-md">
                 Practice with intelligent AI interviewers and get real-time
                 feedback to boost your confidence.
               </p>
 
               {/* Feature Highlights */}
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-4 h-4 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+              <div className="space-y-5 pt-4">
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-white/[0.04] border border-white/[0.08] rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <span className="text-xl">🎙️</span>
                   </div>
-                  <span className="text-blue-100">Real-time AI feedback</span>
+                  <span className="text-gray-300 font-medium">Real-time AI voice feedback</span>
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-4 h-4 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-white/[0.04] border border-white/[0.08] rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <span className="text-xl">🎯</span>
                   </div>
-                  <span className="text-blue-100">
+                  <span className="text-gray-300 font-medium">
                     Industry-specific questions
                   </span>
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-4 h-4 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-white/[0.04] border border-white/[0.08] rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <span className="text-xl">📈</span>
                   </div>
-                  <span className="text-blue-100">Performance analytics</span>
+                  <span className="text-gray-300 font-medium">Performance analytics</span>
                 </div>
               </div>
             </div>
@@ -121,58 +85,64 @@ export default async function Page() {
         </section>
 
         {/* Right Side - Sign In Form */}
-        <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-          <div className="w-full max-w-md">
+        <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6 relative">
+          <div className="w-full max-w-md relative z-10">
             {/* Mobile Header */}
-            <div className="relative -mt-16 block lg:hidden text-center">
+            <div className="relative -mt-16 block lg:hidden text-center mb-10">
               <a
-                className="inline-flex size-16 items-center justify-center rounded-full bg-white shadow-lg text-blue-600 sm:size-20 dark:bg-gray-900 hover:shadow-xl transition-shadow"
+                className="inline-flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-blue-500/20 transition-all hover:scale-105"
                 href="/"
               >
                 <span className="sr-only">SKILL ANALYSER</span>
-                <svg
-                  className="h-8 sm:h-10"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clipRule="evenodd"
-                  />
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                 </svg>
               </a>
 
-              <h1 className="mt-4 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl dark:text-white">
-                Welcome to SKILL ANALYSER
+              <h1 className="mt-6 text-2xl font-bold text-white sm:text-3xl">
+                Welcome back
               </h1>
-
-              <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-sm mx-auto">
-                Sign in to start practicing with our AI interviewers and improve
-                your skills.
+              <p className="mt-2 text-gray-400 text-sm">
+                Sign in to continue your preparation
               </p>
             </div>
 
             {/* Sign In Form */}
-            <div className="mt-8 lg:mt-0">
-              <div className="">
-                <div className="space-y-6">
-                  <SignIn />
-                </div>
-              </div>
+            <div className="bg-white/[0.02] border border-white/[0.06] rounded-3xl p-6 sm:p-8 backdrop-blur-sm shadow-2xl">
+              <SignIn appearance={{
+                elements: {
+                  formButtonPrimary: "bg-gradient-to-r from-blue-500 to-violet-600 hover:from-blue-400 hover:to-violet-500 text-white shadow-lg shadow-blue-500/20 border-0",
+                  card: "bg-transparent shadow-none",
+                  headerTitle: "text-white hidden",
+                  headerSubtitle: "text-gray-400 hidden",
+                  socialButtonsBlockButton: "border-white/[0.1] bg-white/[0.04] text-white hover:bg-white/[0.08]",
+                  socialButtonsBlockButtonText: "text-white font-medium",
+                  dividerLine: "bg-white/[0.1]",
+                  dividerText: "text-gray-500",
+                  formFieldLabel: "text-gray-300",
+                  formFieldInput: "bg-white/[0.04] border-white/[0.1] text-white focus:border-blue-500/50",
+                  footerActionText: "text-gray-400",
+                  footerActionLink: "text-blue-400 hover:text-blue-300",
+                  identityPreviewText: "text-gray-300",
+                  identityPreviewEditButton: "text-blue-400 hover:text-blue-300",
+                  formFieldSuccessText: "text-green-400",
+                  formFieldErrorText: "text-red-400",
+                  footer: "hidden" // Hide clerk's footer since we have our own
+                }
+              }} />
+            </div>
 
-              {/* Additional Info */}
-              <div className="mt-6 text-center">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  New to SKILL ANALYSER?{" "}
-                  <a
-                    href="/sign-up"
-                    className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
-                  >
-                    Create an account
-                  </a>
-                </p>
-              </div>
+            {/* Additional Info */}
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-400">
+                New to SKILL ANALYSER?{" "}
+                <a
+                  href="/sign-up"
+                  className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                >
+                  Create an account
+                </a>
+              </p>
             </div>
           </div>
         </main>
