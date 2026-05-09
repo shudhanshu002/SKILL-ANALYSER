@@ -10,7 +10,7 @@ export const MockInterview = pgTable('mockInterview', {
     createdBy: varchar('createdBy').notNull(),
     createdAt: varchar('createdAt'),
     mockId: varchar('mockId').notNull()
-});
+}); 
 
 export const Question = pgTable('question', {
     id: serial('id').primaryKey(),
