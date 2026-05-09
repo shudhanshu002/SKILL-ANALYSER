@@ -33,8 +33,7 @@ const InterviewList = () => {
       } else {
         throw new Error(result.error);
       }
-    } catch (err) {
-      console.error("Error fetching interviews:", err);
+    } catch {
       setError("Unable to connect to the database.");
       
       // Run diagnostic on failure

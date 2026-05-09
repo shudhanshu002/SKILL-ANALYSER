@@ -26,10 +26,6 @@ const Header = ({ logo }) => {
   }, []);
 
   const path = usePathname();
-
-  useEffect(() => {
-    console.log(path);
-  }, []);
   return (
     <div className=" bg-secondary shadow-sm ">
       <div className="w-[80%] m-auto flex gap-4 items-center justify-between">

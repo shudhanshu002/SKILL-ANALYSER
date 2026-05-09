@@ -10,9 +10,8 @@ export async function saveMockInterview(data) {
             .values(data)
             .returning({ mockId: MockInterview.mockId });
         return { success: true, data: resp };
-    } catch (error) {
-        console.error("Server Action Error (saveMockInterview):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to save interview. Please try again." };
     }
 }
 
@@ -24,9 +23,8 @@ export async function getInterviewList(email) {
             .where(eq(MockInterview.createdBy, email))
             .orderBy(desc(MockInterview.id));
         return { success: true, data: result };
-    } catch (error) {
-        console.error("Server Action Error (getInterviewList):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to load interviews. Please check your connection." };
     }
 }
 
@@ -37,9 +35,8 @@ export async function getInterviewById(mockId) {
             .from(MockInterview)
             .where(eq(MockInterview.mockId, mockId));
         return { success: true, data: result[0] };
-    } catch (error) {
-        console.error("Server Action Error (getInterviewById):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to load interview details." };
     }
 }
 
@@ -49,9 +46,8 @@ export async function saveUserAnswer(data) {
             .insert(UserAnswer)
             .values(data);
         return { success: true, data: resp };
-    } catch (error) {
-        console.error("Server Action Error (saveUserAnswer):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to save your answer. Please try again." };
     }
 }
 
@@ -63,9 +59,8 @@ export async function getFeedback(mockId) {
             .where(eq(UserAnswer.mockIdRef, mockId))
             .orderBy(UserAnswer.id);
         return { success: true, data: result };
-    } catch (error) {
-        console.error("Server Action Error (getFeedback):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to load feedback." };
     }
 }
 
@@ -76,9 +71,8 @@ export async function saveQuestion(data) {
             .values(data)
             .returning({ mockId: Question.mockId });
         return { success: true, data: resp };
-    } catch (error) {
-        console.error("Server Action Error (saveQuestion):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to save questions. Please try again." };
     }
 }
 
@@ -90,9 +84,8 @@ export async function getQuestionsByEmail(email) {
             .where(eq(Question.createdBy, email))
             .orderBy(desc(Question.id));
         return { success: true, data: result };
-    } catch (error) {
-        console.error("Server Action Error (getQuestionsByEmail):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to load questions." };
     }
 }
 
@@ -103,9 +96,8 @@ export async function getQuestionById(mockId) {
             .from(Question)
             .where(eq(Question.mockId, mockId));
         return { success: true, data: result[0] };
-    } catch (error) {
-        console.error("Server Action Error (getQuestionById):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to load question set." };
     }
 }
 
@@ -115,8 +107,7 @@ export async function saveNewsletterResponse(data) {
             .insert(Newsletter)
             .values(data);
         return { success: true, data: resp };
-    } catch (error) {
-        console.error("Server Action Error (saveNewsletterResponse):", error);
-        return { success: false, error: error.message };
+    } catch {
+        return { success: false, error: "Failed to submit. Please try again." };
     }
 }

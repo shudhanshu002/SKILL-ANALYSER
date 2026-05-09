@@ -53,9 +53,8 @@ const RecordAnswerSection = ({
 
       mediaRecorderRef.current.start();
       setIsRecording(true);
-    } catch (error) {
-      console.error("Error starting recording:", error);
-      toast("Error starting recording. Please check your microphone permissions.");
+    } catch {
+      toast("Could not start recording. Please check microphone permissions.");
     }
   };
 
@@ -86,9 +85,8 @@ const RecordAnswerSection = ({
         setUserAnswer((prevAnswer) => prevAnswer + " " + transcription);
         setLoading(false);
       };
-    } catch (error) {
-      console.error("Error transcribing audio:", error);
-      toast("Error transcribing audio. Please try again.");
+    } catch {
+      toast("Could not transcribe audio. Please try again.");
       setLoading(false);
     }
   };
@@ -111,7 +109,7 @@ const RecordAnswerSection = ({
       const match = rawText.match(/```json\n?([\s\S]*?)\n?```/) || rawText.match(/\{([\s\S]*)\}/);
       let MockJsonResp = match ? (match[0].startsWith('{') ? match[0] : match[1]).trim() : rawText.trim();
       
-      console.log("Extracted Feedback JSON:", MockJsonResp);
+
 
       // Attempt to parse JSON
       let jsonFeedbackResp;
@@ -140,9 +138,8 @@ const RecordAnswerSection = ({
       } else {
         throw new Error(saveResult.error);
       }
-    } catch (error) {
-      console.error("Error saving answer:", error);
-      toast.error("Failed to save answer. " + error.message);
+    } catch {
+      toast.error("Failed to save answer. Please try again.");
     } finally {
       setLoading(false);
     }

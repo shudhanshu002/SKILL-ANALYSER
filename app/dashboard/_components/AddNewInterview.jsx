@@ -46,8 +46,7 @@ const AddNewInterview = () => {
       // Attempt to clean the response in case AI included markdown
       const MockJsonResp = rawText.replace(/```json|```/g, "").trim();
       
-      console.log("Extracted JSON:", MockJsonResp);
-      
+
       // Validate JSON before sending to server
       JSON.parse(MockJsonResp);
 
@@ -73,7 +72,6 @@ const AddNewInterview = () => {
         }
       }
     } catch (err) {
-      console.error("Error creating interview:", err);
       toast.error("Database connection failed. Check your network or DNS settings.");
       
       // Background diagnostic check

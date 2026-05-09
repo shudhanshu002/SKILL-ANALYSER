@@ -50,8 +50,7 @@ const AddQuestions = () => {
       const match = rawText.match(/\[([\s\S]*)\]/) || rawText.match(/```json\n?([\s\S]*?)\n?```/);
       const MockQuestionJsonResp = match ? match[0].replace(/```json|```/g, "").trim() : rawText.trim();
       
-      console.log("JSON RESPONSE", MockQuestionJsonResp);
-      
+
       // Validate JSON
       JSON.parse(MockQuestionJsonResp);
 
@@ -79,8 +78,7 @@ const AddQuestions = () => {
         }
       }
     } catch (error) {
-      console.error("Failed to generate questions:", error);
-      toast.error("Error: " + error.message);
+      toast.error("Error generating questions. Please try again.");
     } finally {
       setLoading(false);
     }

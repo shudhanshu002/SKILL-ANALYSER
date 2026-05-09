@@ -31,8 +31,7 @@ const StartInterview = ({ params }) => {
       setMockInterviewQuestion(jsonMockResp);
       setInterviewData(result.data);
     } catch (err) {
-      console.error("Error fetching interview details:", err);
-      setError(err.message || "Failed to load interview details. Please check your connection.");
+      setError(err.message || "Failed to load interview details.");
     } finally {
       setLoading(false);
     }

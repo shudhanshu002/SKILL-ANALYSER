@@ -26,8 +26,8 @@ const Feedback = ({ params }) => {
       } else {
         throw new Error(result.error);
       }
-    } catch (error) {
-      console.error("Error fetching feedback:", error);
+    } catch {
+      // silently handle — UI shows empty state
     }
   };
 

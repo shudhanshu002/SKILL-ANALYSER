@@ -26,8 +26,7 @@ const Interview = ({ params }) => {
         throw new Error("Interview details not found.");
       }
       setInterviewData(result.data);
-    } catch (err) {
-      console.error("Error fetching interview details:", err);
+    } catch {
       setError("Failed to load interview. Please verify your database connection.");
     } finally {
       setLoading(false);
