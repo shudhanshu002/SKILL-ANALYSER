@@ -1,15 +1,7 @@
 # SKILL ANALYSER - AI Mock Interview Platform
 
-<!-- ![Demo Homepage](file:///C:/Users/sudha/.gemini/antigravity/brain/c0dcf605-9f27-42c8-8b41-835a7eeb9253/demo_homepage_1778661349180.png)
+![Demo](./public/landing-page.png)
 
-[![Next.js](https://img.shields.io/badge/Next.js-14.2.4-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-18.3.1-blue)](https://reactjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.0-38B2AC)](https://tailwindcss.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-336791)](https://neon.tech/)
-[![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF)](https://clerk.com/)
-[![Gemini AI](https://img.shields.io/badge/Gemini_AI-2.5_Flash-4285F4)](https://ai.google.dev/) -->
-
----
 
 ## 🎯 Overview
 
